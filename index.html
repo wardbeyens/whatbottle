@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <title>What Bottle?</title>
+    <style>
+      body {
+        padding-top: 5rem;
+      }
+      .card {
+        margin: 0 auto; /* Added */
+        float: none; /* Added */
+        margin-bottom: 10px; /* Added */
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarsExampleDefault"
+          aria-controls="navbarsExampleDefault"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item active">
+              <a class="nav-link" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container">
+      <div class="starter-template text-center py-5 px-3">
+        <h1>What Bottle?</h1>
+        <p class="lead">
+          Do you have a picture and you ask yourself well, what kind of bottle
+          is this?<br />
+          You are in the right place!
+        </p>
+      </div>
+    </main>
+
+    <div class="row">
+      <div class="card col-8">
+        <!-- <img
+          class="card-img-top"
+          src="https://wset.azureedge.net/umbracomedia-cache/b/5/1/3/6/d/b5136da2b7b5068143094f9248d08809939aca5e.jpg"
+          alt="Card image cap"
+        /> -->
+        <div class="card-body">
+          <h3 class="card-title">upload your image</h3>
+          <form id="formulier">
+            <div class="form-group">
+              <label for="exampleFormControlFile1">Example file input</label>
+              <input type="file" class="form-control-file" id="image" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    window.addEventListener("load", function () {
+      const form = document.getElementById("formulier");
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
+          crossdomain: true,
+        },
+      };
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        var formData = new FormData();
+        var imagefile = document.querySelector("#image");
+        formData.append("image", imagefile.files[0]);
+
+        axios
+          .post("http://ai.wabyte.com/classification", formData, config)
+          .then((response) => {
+            console.log(response);
+            let item = response.data.match(/'([^']+)'/)[1];
+            alert(item);
+          })
+          .catch((error) => console.log(error));
+      });
+    });
+  </script>
+</html>
