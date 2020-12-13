@@ -1,0 +1,26 @@
+body {
+  padding-top: 5rem;
+  background-image: url(./images/bgi.jpg);
+}
+.card {
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+  margin-bottom: 10px; /* Added */
+  max-width: 768px;
+}
+.bcp {
+  background-color: #2b5797 !important;
+}
+.cp {
+  color: #2b5797 !important;
+}
+
+.ulcenter {
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  .list-group {
+    flex-direction: row;
+  }
+}
