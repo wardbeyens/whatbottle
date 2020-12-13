@@ -114,8 +114,20 @@
         axios
           .post("https://ai.wabyte.com/classification", formData, config)
           .then((response) => {
-            console.log(response);
+            // console.log(response);
             let item = response.data.match(/'([^']+)'/)[1];
+            let array = response.data.match(/\[(.*?)\]/)[1].split(",");
+            let resultaat = {
+              beer: Number(array[0]).toFixed(2),
+              champagne: Number(array[1]).toFixed(2),
+              soda: Number(array[2]).toFixed(2),
+              wine: Number(array[3]).toFixed(2),
+              wodka: Number(array[4]).toFixed(2),
+            };
+            console.log(item);
+            console.log(resultaat);
+
+            //voorbeeld resultaat: {beer: "0.78", champagne: "0.00", soda: "0.00", wine: "0.00", wodka: "0.22"}
             alert(item);
           })
           .catch((error) => console.log(error));
